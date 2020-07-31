@@ -31,9 +31,9 @@ class Command(PsycopgBaseCommand):
                 if table_name in settings.EXCLUDE_TABLES:
                     continue
 
-                self.stdout.write('Clean table {}'.format(table_name))
+                self.stdout.write('Clean table "{}"'.format(table_name))
                 if table_name not in settings.EXCLUDE_VACUUM_TABLES:
-                    self._run_clean_command(connection, cursor, 'VACUUM {} {}'.format(
+                    self._run_clean_command(connection, cursor, 'VACUUM {} "{}"'.format(
                         (
                             '(FULL, VERBOSE, ANALYZE)' if table_name in settings.FULL_VACUUM_TABLES
                             else '(VERBOSE, ANALYZE)'
@@ -41,4 +41,4 @@ class Command(PsycopgBaseCommand):
                         table_name
                     ))
                 if table_name not in settings.EXCLUDE_REINDEX_TABLES:
-                    self._run_clean_command(connection, cursor, 'REINDEX (VERBOSE) TABLE {}'.format(table_name))
+                    self._run_clean_command(connection, cursor, 'REINDEX (VERBOSE) TABLE "{}"'.format(table_name))
